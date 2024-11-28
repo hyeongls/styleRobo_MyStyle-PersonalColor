@@ -30,7 +30,8 @@ public class Personal_Color {
     @Column(name = "face_image", columnDefinition = "MEDIUMBLOB")
     private byte[] faceImage;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+
+    @Column(name = "created_at", insertable = false, nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     // 외래 키 매핑: user_id

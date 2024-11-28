@@ -27,7 +27,7 @@ public class FavoriteFashionResults {
     @Column(name = "diagnosed_style", columnDefinition = "TEXT", nullable = false) // TEXT 매핑
     private String diagnosedStyle;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", insertable = false, nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     // 외래 키 매핑: user_id
