@@ -15,7 +15,7 @@ import pproject.stylelobo.services.UsersService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/myStyle")
+@RequestMapping("/api/myStyle")
 public class MyStyleController {
     @Autowired
     private MyStyleSavedService myStyleSavedService;
@@ -23,15 +23,23 @@ public class MyStyleController {
     private UsersService usersService;
 
 
-    @GetMapping("/{userName}")
-    public MyStyleResponseDto myStyle(@PathVariable String userName){
+    @GetMapping("/color/{userName}")
+    public List<MyStyleColorDetailDto> myStyleColor(@PathVariable String userName){
+
+        Users user = usersService.userFindByUserName(userName);
+        List<MyStyleColorDetailDto> myStyleColorDetailDtos = myStyleSavedService.colorMyStyle(user.getId());
+
+        return myStyleColorDetailDtos;
+    }
+
+    @GetMapping("/fashion/{userName}")
+    public List<MyStyleFashionDetailDto> myStyleFashion(@PathVariable String userName){
 
         Users user = usersService.userFindByUserName(userName);
         List<MyStyleFashionDetailDto> myStyleFashionDetailDtos = myStyleSavedService.fashionMyStyle(user.getId());
-        List<MyStyleColorDetailDto> myStyleColorDetailDtos = myStyleSavedService.colorMyStyle(user.getId());
 
-        MyStyleResponseDto dto = new MyStyleResponseDto(myStyleFashionDetailDtos, myStyleColorDetailDtos);
-        return dto;
+
+        return myStyleFashionDetailDtos;
     }
 
     @GetMapping("/test")

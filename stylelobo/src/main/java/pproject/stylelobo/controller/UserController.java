@@ -36,8 +36,8 @@ public class UserController {
         return usersRepository.findAll();
     }
 
-    @GetMapping("/hello")
+    @GetMapping("/api/hello")
     public String hello(){
-        return "Hello";
+        return "아이디";
     }
 }

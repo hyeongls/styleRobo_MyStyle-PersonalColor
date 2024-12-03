@@ -19,7 +19,7 @@ import java.io.InputStreamReader;
 import java.util.Base64;
 
 @RestController
-@RequestMapping("/personalColor")
+@RequestMapping("/api/personalColor")
 public class PersonalColorConsultingController {
 
     @Autowired
@@ -67,14 +67,14 @@ public class PersonalColorConsultingController {
         String recommendation = "";
 
         if(colorType.equals("spring")){
-            recommendation += "";
+            recommendation += "# 아이보리 계열 # 쉬폰 or 폴리스 소재 \n #밝은 컬러 #화사한 느낌 \n # 페미닌 & 러블리 스타일";
         } else if (colorType.equals("summer")) {
-            recommendation += "여름 쿨";
+            recommendation += "# 연한 회색 or 소라색 계열 # 쉬폰 or 레이스 소재 \n #차가운 컬러 #화사한 느낌 \n # 페미닌 & 캐주얼 스타일";
         } else if (colorType.equals("fall")) {
-            recommendation += "# 갈색 계열 #가죽소재 \n #짙은 컬러  #진중한 이미지 \n #에스닉 & 보헤미안 스타일";
+            recommendation += "#갈색 계열 #가죽소재 \n #짙은 컬러  #진중한 이미지 \n #에스닉 & 보헤미안 스타일";
         }
         else if (colorType.equals("winter")){
-            recommendation += "";
+            recommendation += "# 비비드한 색상 계열 # 빳빡한 시스루 or 스웨이드 소재 \n #화이트 & 블랙 #차갑고 모던한 느낌 \n # 오피스 & 올블랙 스타일";
         }
 
         //퍼스널 컬러 DB에 저장
