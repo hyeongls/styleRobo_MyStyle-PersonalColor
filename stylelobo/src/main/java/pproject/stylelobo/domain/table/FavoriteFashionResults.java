@@ -2,6 +2,7 @@ package pproject.stylelobo.domain.table;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,8 +25,9 @@ public class FavoriteFashionResults {
     @Column(name = "preferred_style_input", columnDefinition = "TEXT") // TEXT 매핑
     private String preferredStyleInput;
 
-    @Column(name = "diagnosed_style", columnDefinition = "TEXT", nullable = false) // TEXT 매핑
-    private String diagnosedStyle;
+    @Lob // LONGBLOB 매핑
+    @Column(name = "diagnosed_style", columnDefinition = "MEDIUMBLOB", nullable = false) // TEXT 매핑
+    private byte[] diagnosedStyle;
 
     @Column(name = "created_at", insertable = false, nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -37,4 +39,12 @@ public class FavoriteFashionResults {
 
 //    @OneToMany(mappedBy = "favoriteFashionResult", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<MyStyleSaved> myStyleSaveds;
+
+    @Builder
+    public FavoriteFashionResults(String selectedStyles, String preferredStyleInput, byte[] diagnosedStyle, Users user) {
+        this.selectedStyles = selectedStyles;
+        this.preferredStyleInput = preferredStyleInput;
+        this.diagnosedStyle = diagnosedStyle;
+        this.user = user;
+    }
 }

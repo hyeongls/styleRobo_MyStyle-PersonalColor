@@ -12,11 +12,11 @@ public class MyStyleFashionDetailDto {
 
     private String nickname;
     private String selectedStyles;
-    private String diagnosedStyle;
+    private byte[] diagnosedStyle;
     private LocalDateTime createAt;
 
     public MyStyleFashionDetailDto(String nickname,
-                                   String selectedStyles, String diagnosedStyle, LocalDateTime createAt) {
+                                   String selectedStyles, byte[] diagnosedStyle, LocalDateTime createAt) {
 
         this.nickname = nickname;
         this.selectedStyles = selectedStyles;
