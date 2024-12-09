@@ -8,4 +8,7 @@ import lombok.Setter;
 public class FashionTypeDTO {
     private String type;
     private String text;
+    private String selectedFace;
+    private String selectedBody;
+    private String url;
 }

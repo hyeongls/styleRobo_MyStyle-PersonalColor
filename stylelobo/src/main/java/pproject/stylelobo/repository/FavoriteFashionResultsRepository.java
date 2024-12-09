@@ -17,7 +17,7 @@ public interface FavoriteFashionResultsRepository extends JpaRepository<Favorite
     @Query("""
         SELECT new pproject.stylelobo.domain.dto.MyStyleFashionDetailDto(
             u.nickName,
-            f.selectedStyles, f.diagnosedStyle, f.createdAt
+            f.selectedStyles, f.diagnosedStyle, f.createdAt, f.selectedFaces, f.selectedBodys
         )
         FROM FavoriteFashionResults f
         JOIN f.user u

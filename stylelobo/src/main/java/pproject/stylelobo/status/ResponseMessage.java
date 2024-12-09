@@ -19,4 +19,9 @@ public class ResponseMessage {
     public static final String TRANSMISSION_FAIL = "전달 실패.";
     public static final String ANALYSIS_SUCCESS = "분석 성공.";
     public static final String ANALYSIS_FAIL = "분석 실패.";
+
+    public static final String IMAGE_SUCCESS = "이미지 생성 성공";
+
+    public static final String SAVE_SUCCESS = "저장 성공";
+    public static final String SAVE_FAIL = "저장 실패";
 }

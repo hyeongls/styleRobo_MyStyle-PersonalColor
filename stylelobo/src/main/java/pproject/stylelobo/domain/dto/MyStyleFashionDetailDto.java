@@ -12,15 +12,19 @@ public class MyStyleFashionDetailDto {
 
     private String nickname;
     private String selectedStyles;
-    private byte[] diagnosedStyle;
+    private String diagnosedStyle;
     private LocalDateTime createAt;
+    private String selectedFace;
+    private String selectedBody;
 
     public MyStyleFashionDetailDto(String nickname,
-                                   String selectedStyles, byte[] diagnosedStyle, LocalDateTime createAt) {
+                                   String selectedStyles, String diagnosedStyle, LocalDateTime createAt, String selectedFace, String selectedBody) {
 
         this.nickname = nickname;
         this.selectedStyles = selectedStyles;
         this.diagnosedStyle = diagnosedStyle;
         this.createAt = createAt;
+        this.selectedFace = selectedFace;
+        this.selectedBody = selectedBody;
     }
 }

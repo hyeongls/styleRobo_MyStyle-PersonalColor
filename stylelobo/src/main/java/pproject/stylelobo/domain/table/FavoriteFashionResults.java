@@ -25,9 +25,15 @@ public class FavoriteFashionResults {
     @Column(name = "preferred_style_input", columnDefinition = "TEXT") // TEXT 매핑
     private String preferredStyleInput;
 
+    @Column(name = "selected_faces", columnDefinition = "TEXT") // TEXT 매핑
+    private String selectedFaces;
+
+    @Column(name = "selected_bodys", columnDefinition = "TEXT") // TEXT 매핑
+    private String selectedBodys;
+
     @Lob // LONGBLOB 매핑
-    @Column(name = "diagnosed_style", columnDefinition = "MEDIUMBLOB", nullable = false) // TEXT 매핑
-    private byte[] diagnosedStyle;
+    @Column(name = "diagnosed_style", columnDefinition = "TEXT", nullable = false) // TEXT 매핑
+    private String diagnosedStyle;
 
     @Column(name = "created_at", insertable = false, nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -41,10 +47,13 @@ public class FavoriteFashionResults {
 //    private List<MyStyleSaved> myStyleSaveds;
 
     @Builder
-    public FavoriteFashionResults(String selectedStyles, String preferredStyleInput, byte[] diagnosedStyle, Users user) {
+    public FavoriteFashionResults(String selectedStyles, String preferredStyleInput, String diagnosedStyle,
+                                    String selectedFaces, String selectedBodys, Users user) {
         this.selectedStyles = selectedStyles;
         this.preferredStyleInput = preferredStyleInput;
         this.diagnosedStyle = diagnosedStyle;
+        this.selectedFaces = selectedFaces;
+        this.selectedBodys = selectedBodys;
         this.user = user;
     }
 }

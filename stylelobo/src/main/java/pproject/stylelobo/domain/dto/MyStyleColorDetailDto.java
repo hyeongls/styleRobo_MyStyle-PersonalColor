@@ -16,6 +16,7 @@ public class MyStyleColorDetailDto {
     private String recommendation;
     private LocalDateTime createAt;
 
+
     public MyStyleColorDetailDto(String nickname,
                                  String colorType, byte[] faceImage, String recommendation, LocalDateTime createAt) {
 

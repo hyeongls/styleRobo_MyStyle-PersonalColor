@@ -75,40 +75,47 @@ public class UserController {
         }
         return new ResponseEntity(DefaultRes.res(StatusCode.OK,ResponseMessage.ID_DUPLICATETEST_SUCCESS, dto), HttpStatus.OK);
     }
+    @GetMapping("/check-nickname")
+    public ResponseEntity<DefaultRes<StatusDTO>> checkNickName(@RequestParam String nickname) {
+        StatusDTO dto = new StatusDTO();
+
+        if (usersService.userFindByNickName(nickname) != null) {
+            dto.setStatus(0); // 중복된 닉네임
+            dto.setMessage("이미 존재하는 닉네임입니다.");
+        } else {
+            dto.setStatus(1); // 사용 가능한 닉네임
+            dto.setMessage("사용 가능한 닉네임입니다.");
+        }
+
+        return new ResponseEntity<>(DefaultRes.res(StatusCode.OK, dto.getMessage(), dto), HttpStatus.OK);
+    }
 
     @PostMapping("/signup")
-    public ResponseEntity<StatusDTO> signup(@RequestBody Users user) {
-
+    public ResponseEntity<DefaultRes<StatusDTO>> signup(@RequestBody Users user) {
         StatusDTO dto = new StatusDTO();
-        HttpHeaders header = new HttpHeaders();
-        header.setContentType(new MediaType("application", "json", Charset.forName("UTF-8")));
 
-        try
-        {
+        try {
             usersService.create(user);
-        }
-        catch (Exception e)
-        {
+            dto.setStatus(1);
+            dto.setMessage("회원가입 성공");
+        } catch (Exception e) {
             errorPrint(e);
-            // 회원가입 실패
             dto.setStatus(0);
             dto.setMessage("회원가입 실패");
             dto.setErrCode("서버쪽 오류");
-            return new ResponseEntity(DefaultRes.res(StatusCode.OK,ResponseMessage.CREATED_USER_FAIL, dto), HttpStatus.OK);
+            return new ResponseEntity<>(DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_USER_FAIL, dto), HttpStatus.OK);
         }
-        // 회원가입 성공
-        dto.setStatus(1);
-        dto.setMessage("회원가입 성공");
 
-        return new  ResponseEntity(DefaultRes.res(StatusCode.OK,ResponseMessage.CREATED_USER, dto), HttpStatus.OK);
+        return new ResponseEntity<>(DefaultRes.res(StatusCode.OK, ResponseMessage.CREATED_USER, dto), HttpStatus.OK);
     }
+
 
     @PostMapping("/login")
     public ResponseEntity<StatusDTO> login(@RequestBody Users user, HttpSession session) {
 
         boolean isLogin = Optional.ofNullable((Boolean) session.getAttribute("isLogin")).orElse(false);
 
-        if (isLogin) {
+        if (!isLogin) {
             StatusDTO dto = new StatusDTO();
             dto.setStatus(usersService.login(user.getUserName(), user.getPassword()));
 
@@ -170,4 +177,10 @@ public class UserController {
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, resMsg, dto), HttpStatus.OK);
     }
 
+    @GetMapping("/isLogin")
+    public boolean isLogin(HttpSession session){
+        boolean isLogin = Optional.ofNullable((Boolean) session.getAttribute("isLogin")).orElse(false);
+
+        return isLogin;
+    }
 }

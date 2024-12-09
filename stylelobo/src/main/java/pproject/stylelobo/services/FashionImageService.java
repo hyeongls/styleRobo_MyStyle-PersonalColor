@@ -30,19 +30,32 @@ public class FashionImageService {
     private String apiKey;
 
     public ImageResDTO FashionType(AiFashionDTO dto){
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.parseMediaType(ImageConfig.MEDIA_TYPE));
         httpHeaders.add(ImageConfig.AUTHORIZATION, ImageConfig.BEARER + apiKey);
+        httpHeaders.add(ImageConfig.MODEL, ImageConfig.MODEL); // 모델 지정
 
-        HttpEntity<AiFashionDTO> resquestHttpEntity = new HttpEntity<>(dto, httpHeaders);
-        ResponseEntity<ImageResDTO> responseEntity = restTemplate.postForEntity(ImageConfig.IMAGE_URL, resquestHttpEntity, ImageResDTO.class);
+        HttpEntity<AiFashionDTO> requestHttpEntity = new HttpEntity<>(dto, httpHeaders);
+        ResponseEntity<ImageResDTO> responseEntity = restTemplate.postForEntity(
+                ImageConfig.IMAGE_URL,
+                requestHttpEntity,
+                ImageResDTO.class
+        );
 
-        return responseEntity.getBody();
+        // 응답에서 URL 추출
+        ImageResDTO response = responseEntity.getBody();
+
+        System.out.println("response.getData() = " + response.getData().toString());
+        System.out.println("response.getData() = " + response.getData().get(0));
+
+        return response;
     }
 
-    public FavoriteFashionResults saveFashionImage(String selectedStyles, String preferredStyleInput, byte[] diagnosedStyle, Users user){
+    public FavoriteFashionResults saveFashionImage(String selectedStyles, String preferredStyleInput, String diagnosedStyle, Users user,
+                                                    String selectedFace, String selectedBody){
 
-        FavoriteFashionResults personalColor = new FavoriteFashionResults(selectedStyles, preferredStyleInput, diagnosedStyle, user);
+        FavoriteFashionResults personalColor = new FavoriteFashionResults(selectedStyles, preferredStyleInput, diagnosedStyle, selectedFace, selectedBody, user);
 
         return favoriteFashionResultsRepository.save(personalColor);
     }
