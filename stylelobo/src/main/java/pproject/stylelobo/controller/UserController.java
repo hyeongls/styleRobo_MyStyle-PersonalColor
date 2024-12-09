@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pproject.stylelobo.domain.dto.StatusDTO;
+import pproject.stylelobo.domain.dto.isLoginDto;
 import pproject.stylelobo.domain.table.Users;
 import pproject.stylelobo.repository.UsersRepository;
 import pproject.stylelobo.services.UsersService;
@@ -178,9 +179,19 @@ public class UserController {
     }
 
     @GetMapping("/isLogin")
-    public boolean isLogin(HttpSession session){
+    public ResponseEntity<isLoginDto> isLogin(HttpSession session){
         boolean isLogin = Optional.ofNullable((Boolean) session.getAttribute("isLogin")).orElse(false);
 
-        return isLogin;
+        if(isLogin){
+            String userName = (String) session.getAttribute("username");
+
+            Users user = usersService.userFindByUserName(userName);
+
+            isLoginDto dto = new isLoginDto(isLogin, user.getNickName(), user.getGender());
+
+            return new ResponseEntity(DefaultRes.res(StatusCode.OK, ResponseMessage.READ_USER, dto), HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity(DefaultRes.res(StatusCode.NO_CONTENT, ResponseMessage.NOT_FOUND_USER), HttpStatus.OK);
     }
 }
