@@ -136,7 +136,7 @@ public class UserController {
                         //세션추가
                         session.setAttribute("username" , user.getUserName());
                         session.setAttribute("isLogin", true);
-                        break;
+
                     case 2:
                         dto.setMessage("비밀번호 오류");
                         resMsg = ResponseMessage.LOGIN_FAIL;

@@ -38,6 +38,8 @@ public class PersonalColorConsultingController {
 
 
 
+//
+
     @PostMapping("/analysis")
     public ResponseEntity<personalColorResponseDto>  personalColorAnalysis(
             //@RequestBody PersonalReqDto reqDto , HttpSession session) throws IOException {
@@ -46,23 +48,23 @@ public class PersonalColorConsultingController {
         boolean isLogin = Optional.ofNullable((Boolean) session.getAttribute("isLogin")).orElse(false);
 
         if(isLogin){
-            String pythonFilePath = "src\\main\\python\\main.py";
+            String pythonFilePath = "src\\main\\python\\main2.py";
 
             String userName = (String) session.getAttribute("username");
 
             Users user = usersService.userFindByUserName(userName);
             String nickName = user.getNickName();
 
-            byte[] faceImage = file.getBytes();
-            String base64Image = Base64.getEncoder().encodeToString(faceImage);
+            File tempFile = File.createTempFile("image_", ".jpg");
+            file.transferTo(tempFile);
 
-            System.out.println("base64Image = " + base64Image);
-
+            System.out.println("tempFile.getAbsolutePath() = " + tempFile.getAbsolutePath());
+            
             //데이터 받아오는 로직
             String colorType = "";
             try {
                 // Python 파일 실행
-                ProcessBuilder proBuilder = new ProcessBuilder("python", pythonFilePath, base64Image);
+                ProcessBuilder proBuilder = new ProcessBuilder("python", pythonFilePath, tempFile.getAbsolutePath());
                 proBuilder.redirectErrorStream(true);
                 Process process = proBuilder.start();
 
@@ -83,6 +85,10 @@ public class PersonalColorConsultingController {
                 System.out.println("Error: " + e.getMessage());
             }
 
+            if (tempFile.exists()) {
+                tempFile.delete();
+            }
+
             String recommendation = "";
 
             if(colorType.equals("spring")){
@@ -95,6 +101,10 @@ public class PersonalColorConsultingController {
             else if (colorType.equals("winter")){
                 recommendation += "# 비비드한 색상 계열 # 빳빡한 시스루 or 스웨이드 소재 \n #화이트 & 블랙 #차갑고 모던한 느낌 \n # 오피스 & 올블랙 스타일";
             }
+            else{
+                String resMsg = ResponseMessage.ANALYSIS_FAIL;
+                return new ResponseEntity(DefaultRes.res(StatusCode.NOT_FOUND, resMsg, null), HttpStatus.OK);
+            }
 
             personalColorResponseDto responseDto = new personalColorResponseDto(colorType, nickName, recommendation, user.getGender());
 
@@ -102,7 +112,7 @@ public class PersonalColorConsultingController {
 
             return new ResponseEntity(DefaultRes.res(StatusCode.OK, resMsg, responseDto), HttpStatus.OK);
         }
-       else{
+        else{
 
             StatusDTO dto = new StatusDTO();
 
