@@ -3,7 +3,7 @@ import userIcon from "../assets/user.png";
 import styles from "./UserMenu.module.css";
 import { useNavigate } from "react-router-dom";
 
-function UserMenu() {
+function UserMenu({ userName, userGender, onLogout }) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -15,13 +15,13 @@ function UserMenu() {
     setIsOpen(false);
   }, []);
 
-  const navtoLogin = () => {
+  const navToLogin = () => {
     navigate("/auth/login");
   };
-  const navSignup=()=>{
-    navigate("/auth/signup");
 
-  }
+  const navToSignup = () => {
+    navigate("/auth/signup");
+  };
 
   return (
     <div
@@ -36,8 +36,31 @@ function UserMenu() {
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >
-          <li className={styles.item} onClick={navSignup}>회원가입</li>
-          <li className={styles.item} onClick={navtoLogin}>로그인</li>
+          {userName ? (
+            <>
+              <li className={styles.item}>
+                <strong>{userName}</strong>
+              </li>
+              <li
+                className={styles.item}
+                onClick={() => {
+                  onLogout();
+                  setIsOpen(false); // 로그아웃 후 메뉴 닫기
+                }}
+              >
+                로그아웃
+              </li>
+            </>
+          ) : (
+            <>
+              <li className={styles.item} onClick={navToSignup}>
+                회원가입
+              </li>
+              <li className={styles.item} onClick={navToLogin}>
+                로그인
+              </li>
+            </>
+          )}
         </ul>
       )}
     </div>

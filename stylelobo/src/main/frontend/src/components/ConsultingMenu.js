@@ -28,7 +28,7 @@ function ConsultingMenu() {
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <a className={styles.icon}>Consulting</a>
+      <span className={styles.icon}>Consulting</span>
       {isOpen && (
         <ul
           className={styles.popup}
@@ -36,7 +36,7 @@ function ConsultingMenu() {
           onMouseLeave={handleMouseLeave}
         >
           <li className={styles.item} onClick={navtoFav}>
-            <></>나의 취향 스타일 진단
+            나의 취향 스타일 진단
           </li>
           <li className={styles.item} onClick={navtoPersonal}>
             퍼스널 컬러 진단

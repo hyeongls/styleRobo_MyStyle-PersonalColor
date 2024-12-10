@@ -1,12 +1,12 @@
+import React from "react";
 import Container from "./Container";
 import styles from "./Nav.module.css";
 import ConsultingMenu from "./ConsultingMenu";
 import MyStyleMenu from "./MyStyleMenu";
-import TodaysPickMenu from "./TodaysPickMenu";
 import UserMenu from "./UserMenu";
 import { Link } from "react-router-dom";
 
-function Nav() {
+function Nav({ userName, onLogout }) {
   return (
     <div className={styles.nav}>
       <Container className={styles.container}>
@@ -28,12 +28,7 @@ function Nav() {
           </li>
           <li>
             <a>
-              <TodaysPickMenu />
-            </a>
-          </li>
-          <li>
-            <a>
-              <UserMenu />
+              <UserMenu userName={userName} onLogout={onLogout} />
             </a>
           </li>
         </ul>
