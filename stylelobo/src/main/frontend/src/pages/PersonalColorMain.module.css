@@ -15,8 +15,6 @@
   gap: 32px;
 }
 
-
-
 .texts {
   display: flex;
   flex: 1 1;
@@ -58,7 +56,6 @@
 
 .button {
   width: 250px;
-  height: 50px;
   border-radius: 15px;
 }
 

@@ -15,12 +15,19 @@
   display: block;
 }
 
+.previewImage {
+  width: 600px;
+  height: 800px;
+  border-radius: 15px;
+  display: block;
+}
 .button {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .uploadButton {
   margin-top: 30px;
   padding: 10px 20px;

@@ -18,16 +18,31 @@ import Dandy from "../assets/Dandy.png";
 import Modern from "../assets/Modern.png";
 import Avant from "../assets/Avant.png";
 import AMCS from "../assets/AMCS.png";
+import hourglass from "../assets/hourglass.svg";
+import apple from "../assets/apple.svg";
+import square from "../assets/square.svg";
+import retangle from "../assets/retangle.svg";
+import invertedTriangle from "../assets/invertedTriangle.svg";
+import pear from "../assets/pear.svg";
+import ovalface from "../assets/ovalface.svg";
+import squareface from "../assets/squareface.svg";
+import diaface from "../assets/diaface.svg";
+import invertTriangleface from "../assets/invertTriangleface.svg";
+import circleface from "../assets/circleface.svg";
+import heartface from "../assets/heartface.svg";
+import eggface from "../assets/eggface.svg";
+
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 
 function FavoriteDiagnosis() {
   const navigate = useNavigate();
-  const navFavDiag = () => {
-    navigate("/consulting/favorite/diagnosis");
-  };
   const [hoveredTag, setHoveredTag] = useState(null);
-  const [selectedTags, setSelectedTags] = useState([]);
+  const [hoveredStyleTag, setHoveredStyleTag] = useState(null);
+  const [hoveredFaceTag, setHoveredFaceTag] = useState(null);
+  const [selectedBodyType, setSelectedBodyType] = useState(null); // 체형 선택 상태
+  const [selectedFaceType, setSelectedFaceType] = useState(null); // 얼굴형 선택 상태
+  const [selectedStyle, setSelectedStyle] = useState(null); // 스타일 선택 상태
   const [inputText, setInputText] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -49,30 +64,68 @@ function FavoriteDiagnosis() {
     { label: "아메카지", image: AMCS },
   ];
 
-  const handleMouseEnter = (tag) => {
+  const tags2 = [
+    { label: "삼각체형", image: pear },
+    { label: "역삼각형체형", image: invertedTriangle },
+    { label: "스트레이트체형", image: retangle },
+    { label: "사각체형", image: square },
+    { label: "모래시계형", image: hourglass },
+    { label: "둥근체형", image: apple },
+  ];
+
+  const tags3 = [
+    { label: "길쭉한형", image: ovalface },
+    { label: "사각형", image: squareface },
+    { label: "다이아몬드형", image: diaface },
+    { label: "역삼각형", image: invertTriangleface },
+    { label: "둥근형", image: circleface },
+    { label: "하트형", image: heartface },
+    { label: "계란형", image: eggface },
+  ];
+
+  const handleMouseEnterShape = (tag) => {
     setHoveredTag(tag);
   };
 
-  const handleMouseLeave = () => {
+  const handleMouseLeaveShape = () => {
     setHoveredTag(null);
   };
 
-  const handleTagClick = (tag) => {
-    if (selectedTags.some((selectedTag) => selectedTag.label === tag.label)) {
-      // 이미 선택된 태그를 클릭하면 제거
-      setSelectedTags(
-        selectedTags.filter((selectedTag) => selectedTag.label !== tag.label)
-      );
-    } else {
-      // 선택되지 않은 태그를 클릭하면 추가
-      setSelectedTags([...selectedTags, tag]);
-    }
+  const handleMouseEnterStyle = (tag) => {
+    setHoveredStyleTag(tag);
   };
 
-  const handleRemoveTag = (tag) => {
-    setSelectedTags(
-      selectedTags.filter((selectedTag) => selectedTag.label !== tag.label)
-    );
+  const handleMouseLeaveStyle = () => {
+    setHoveredStyleTag(null);
+  };
+
+  const handleMouseEnterFace = (tag) => {
+    setHoveredFaceTag(tag);
+  };
+
+  const handleMouseLeaveFace = () => {
+    setHoveredFaceTag(null);
+  };
+
+  const handleBodyTypeClick = (tag) => {
+    if (selectedBodyType && selectedBodyType.label === tag.label) {
+      return; // 아무 동작도 하지 않음
+    }
+    setSelectedBodyType(tag);
+  };
+
+  const handleFaceTypeClick = (tag) => {
+    if (selectedFaceType && selectedFaceType.label === tag.label) {
+      return; // 아무 동작도 하지 않음
+    }
+    setSelectedFaceType(tag);
+  };
+
+  const handleStyleClick = (tag) => {
+    if (selectedStyle && selectedStyle.label === tag.label) {
+      return; // 아무 동작도 하지 않음
+    }
+    setSelectedStyle(tag);
   };
 
   const handleInputChange = (e) => {
@@ -88,34 +141,6 @@ function FavoriteDiagnosis() {
     }, 2000); // 2초 대기
   };
 
-  //  백엔드 작동시 const handleSubmit = async (e) => {
-  //     e.preventDefault();
-
-  //     const dataToSend = {
-  //       selectedTags: selectedTags.map((tag) => tag.label), // 태그 텍스트만 추출
-  //       description: inputText,
-  //     };
-
-  //     try {
-  //       const response = await fetch("YOUR_BACKEND_ENDPOINT", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(dataToSend),
-  //       });
-
-  //       if (response.ok) {
-  //         console.log("Data successfully sent to the backend");
-  //         navigate("/consulting/favorite/diagnosis");
-  //       } else {
-  //         console.error("Error sending data to the backend");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error:", error);
-  //     }
-  //   };
-
   if (loading) return <LoadingPage robotImage={Robot} />;
   return (
     <>
@@ -130,36 +155,32 @@ function FavoriteDiagnosis() {
             <br></br> 이에 대해서 ai가 진단해주고 당신의 스타일에 대해서
             알려줄거예요!
           </strong>
-          <div className={styles.texts}>
-            1. 당신이 평소에 즐겨입는 스타일은 무엇인가요?{" "}
-            <span className={styles.description}>(중복 가능)</span>
-          </div>
         </p>
 
+        <div className={styles.texts}>
+          1. 당신의 체형은 무엇인가요?{" "}
+          <span className={styles.description}>(중복 불가)</span>
+        </div>
         <Container className={styles.tagContainer}>
-          {tags.map((tag, index) => (
+          {tags2.map((tag, index) => (
             <span
               key={index}
               className={`${styles.tag} ${
-                selectedTags.some(
-                  (selectedTag) => selectedTag.label === tag.label
-                )
+                selectedBodyType && selectedBodyType.label === tag.label
                   ? styles.selectedTag
                   : ""
               }`}
-              onMouseEnter={() => handleMouseEnter(tag)}
-              onMouseLeave={handleMouseLeave}
-              onClick={() => handleTagClick(tag)}
+              onMouseEnter={() => handleMouseEnterShape(tag)}
+              onMouseLeave={handleMouseLeaveShape}
+              onClick={() => handleBodyTypeClick(tag)} // 체형 선택 핸들러
             >
               {tag.label}
-              {selectedTags.some(
-                (selectedTag) => selectedTag.label === tag.label
-              ) && (
+              {selectedBodyType && selectedBodyType.label === tag.label && (
                 <span
                   className={styles.closeButton}
                   onClick={(e) => {
                     e.stopPropagation();
-                    handleRemoveTag(tag);
+                    setSelectedBodyType(null); // 선택 해제
                   }}
                 >
                   {" "}
@@ -170,7 +191,7 @@ function FavoriteDiagnosis() {
           ))}
         </Container>
 
-        {/* 태그에 마우스가 올라갔을 때 이미지 표시 */}
+        {/* 체형에 대한 미리보기 이미지 */}
         <Container
           className={`${styles.hoverImageContainer} ${
             hoveredTag && hoveredTag.image ? styles.show : ""
@@ -184,17 +205,116 @@ function FavoriteDiagnosis() {
             />
           )}
         </Container>
+
         <div className={styles.texts}>
-          2. 당신이 입고싶은 스타일에 대해서 설명해주세요!
+          2. 당신의 얼굴형은 무엇인가요?{" "}
+          <span className={styles.description}>(중복 불가)</span>
+        </div>
+        <Container className={styles.tagContainer}>
+          {tags3.map((tag, index) => (
+            <span
+              key={index}
+              className={`${styles.tag} ${
+                selectedFaceType && selectedFaceType.label === tag.label
+                  ? styles.selectedTag
+                  : ""
+              }`}
+              onMouseEnter={() => handleMouseEnterFace(tag)} // 얼굴형 hover 핸들러 추가
+              onMouseLeave={handleMouseLeaveFace} // 얼굴형 hover 해제 핸들러 추가
+              onClick={() => handleFaceTypeClick(tag)} // 얼굴형 선택 핸들러
+            >
+              {tag.label}
+              {selectedFaceType && selectedFaceType.label === tag.label && (
+                <span
+                  className={styles.closeButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedFaceType(null); // 선택 해제
+                  }}
+                >
+                  {" "}
+                  ×{" "}
+                </span>
+              )}
+            </span>
+          ))}
+        </Container>
+
+        {/* 얼굴형에 대한 미리보기 이미지 */}
+        <Container
+          className={`${styles.hoverImageContainer} ${
+            hoveredFaceTag && hoveredFaceTag.image ? styles.show : ""
+          }`}
+        >
+          {hoveredFaceTag && hoveredFaceTag.image && (
+            <img
+              src={hoveredFaceTag.image}
+              alt={hoveredFaceTag.label}
+              className={styles.hoverImage}
+            />
+          )}
+        </Container>
+
+        <div className={styles.texts}>
+          3. 당신이 평소에 즐겨입는 스타일은 무엇인가요?{" "}
+          <span className={styles.description}>(중복 불가)</span>
+        </div>
+        <Container className={styles.tagContainer2}>
+          {tags.map((tag, index) => (
+            <span
+              key={index}
+              className={`${styles.tag} ${
+                selectedStyle && selectedStyle.label === tag.label
+                  ? styles.selectedTag
+                  : ""
+              }`}
+              onMouseEnter={() => handleMouseEnterStyle(tag)}
+              onMouseLeave={handleMouseLeaveStyle}
+              onClick={() => handleStyleClick(tag)} // 스타일 선택 핸들러
+            >
+              {tag.label}
+              {selectedStyle && selectedStyle.label === tag.label && (
+                <span
+                  className={styles.closeButton}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setSelectedStyle(null); // 선택 해제
+                  }}
+                >
+                  {" "}
+                  ×{" "}
+                </span>
+              )}
+            </span>
+          ))}
+        </Container>
+
+        {/* 스타일에 대한 미리보기 이미지 */}
+        <Container
+          className={`${styles.hoverImageContainer} ${
+            hoveredStyleTag && hoveredStyleTag.image ? styles.show : ""
+          }`}
+        >
+          {hoveredStyleTag && hoveredStyleTag.image && (
+            <img
+              src={hoveredStyleTag.image}
+              alt={hoveredStyleTag.label}
+              className={styles.hoverImage}
+            />
+          )}
+        </Container>
+
+        <div className={styles.texts}>
+          4. 당신이 입고싶은 스타일에 대해서 설명해주세요!
         </div>
         <Container className={styles.textcontainer}>
           <textarea
             className={styles.textarea}
-            placeholder="당신이 좋아하는 스타일이나 평소에 입고싶은 스타일에 대해서 자유롭게 적어주세요!  
-작성된 글에 기반해서 당신이 원하는 스타일을 추천해드려요!"
+            placeholder={`당신이 좋아하는 스타일이나 평소에 입고싶은 스타일에 대해서 자유롭게 적어주세요!
+작성된 글에 기반해서 당신이 원하는 스타일을 추천해드려요!`}
             value={inputText}
             onChange={handleInputChange}
-          ></textarea>
+          />
         </Container>
         <Container className={styles.buttoncontainer}>
           <Button className={styles.button} onClick={handleSubmit}>

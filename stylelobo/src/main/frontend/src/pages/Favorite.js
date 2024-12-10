@@ -13,24 +13,23 @@ function Favorite() {
     <>
       <div className={styles.bg} />
       <Container className={styles.container}>
-      <div className={styles.textimagecontainer}>
-        <div className={styles.texts}>
-          <div className={styles.heading}>
-            <strong> Favorite Fashion</strong>
+        <div className={styles.textimagecontainer}>
+          <div className={styles.texts}>
+            <div className={styles.heading}>
+              <strong> Favorite Fashion</strong>
+            </div>
+            <p className={styles.description}>
+              <strong>나의 취향을 보여주고 스타일을 추천받아보세요!</strong>
+              <br />
+            </p>
+            <Button className={styles.button} onClick={navFavDiag}>
+              ▶ 진단하러 가기
+            </Button>
           </div>
-          <p className={styles.description}>
-            <strong>나의 취향을 보여주고 스타일을 추천받아보세요!</strong>
-            <br />
-          </p>
-          <Button className={styles.button} onClick={navFavDiag}>
-          ▶ 진단하러 가기
-        </Button>
-        </div>
 
-        <div className={styles.figure}>
-          <img src={robot} alt="로봇" />
-        </div>
-
+          <div className={styles.figure}>
+            <img src={robot} alt="로봇" />
+          </div>
         </div>
       </Container>
     </>

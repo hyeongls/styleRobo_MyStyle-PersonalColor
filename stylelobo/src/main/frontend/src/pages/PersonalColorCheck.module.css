@@ -4,9 +4,9 @@
   padding-bottom: 250px;
   border-radius: 15px;
   border: 2px solid #ff515285;
-  background-color: #ff515238;
+  background-color: hsla(360, 100%, 66%, 0.22);
   width: 682px;
-  height: 830px;
+  height: 800px;
   opacity: 1;
 }
 
@@ -38,21 +38,22 @@
 }
 
 .description {
+  margin: 15px 0 15px 0;
+
   width: 651px;
   color: #000000;
-  font-size: 25px;
-  font-style: normal;
+  font-size: 25px; /* 기존 폰트 크기 유지 */
   font-weight: bold;
   line-height: normal;
   font-family: Inter;
-  font-weight: 700;
-  line-height: 30.26px;
   text-align: center;
 }
 
-.description p {
-  font-size: 15px;
+.subDescription {
+  margin: 15px 0 15px 0;
+  font-size: 15px; /* 서브 설명에 대한 폰트 크기 */
   line-height: 18.15px;
+  text-align: center; /* 왼쪽 정렬 */
 }
 
 .ending {

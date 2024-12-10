@@ -10,7 +10,7 @@
 .container {
   margin-top: 70px;
   width: 682px;
-  height: 830px;
+  padding-bottom: 50px;
   flex-shrink: 0;
   border-radius: 15px;
   border: 1px solid #fc8687;
@@ -47,6 +47,15 @@
 }
 
 .tagContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3열로 배열 */
+  gap: 15px 10px; /* 세로와 가로 간격 조절 */
+  padding: 20px;
+  max-width: 600px; /* 원하는 너비 설정 */
+  margin: auto; /* 중앙 정렬 */
+}
+
+.tagContainer2 {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
   gap: 15px 10px; /* 세로와 가로 간격 조절 */
