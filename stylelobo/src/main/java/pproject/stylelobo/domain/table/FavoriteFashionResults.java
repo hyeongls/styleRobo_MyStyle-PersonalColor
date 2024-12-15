@@ -32,8 +32,8 @@ public class FavoriteFashionResults {
     private String selectedBodys;
 
     @Lob // LONGBLOB 매핑
-    @Column(name = "diagnosed_style", columnDefinition = "TEXT", nullable = false) // TEXT 매핑
-    private String diagnosedStyle;
+    @Column(name = "diagnosed_style", columnDefinition = "MEDIUMBLOB", nullable = false) // TEXT 매핑
+    private byte[] diagnosedStyle;
 
     @Column(name = "created_at", insertable = false, nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -47,7 +47,7 @@ public class FavoriteFashionResults {
 //    private List<MyStyleSaved> myStyleSaveds;
 
     @Builder
-    public FavoriteFashionResults(String selectedStyles, String preferredStyleInput, String diagnosedStyle,
+    public FavoriteFashionResults(String selectedStyles, String preferredStyleInput, byte[] diagnosedStyle,
                                     String selectedFaces, String selectedBodys, Users user) {
         this.selectedStyles = selectedStyles;
         this.preferredStyleInput = preferredStyleInput;

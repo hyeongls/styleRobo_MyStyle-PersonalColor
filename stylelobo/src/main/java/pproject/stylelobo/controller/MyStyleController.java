@@ -19,6 +19,7 @@ import pproject.stylelobo.status.DefaultRes;
 import pproject.stylelobo.status.ResponseMessage;
 import pproject.stylelobo.status.StatusCode;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,7 @@ public class MyStyleController {
 
         boolean isLogin = Optional.ofNullable((Boolean) session.getAttribute("isLogin")).orElse(false);
 
+
         if(isLogin){
             String userName = (String) session.getAttribute("username");
 
@@ -50,7 +52,7 @@ public class MyStyleController {
 
         StatusDTO dto = new StatusDTO();
 
-        dto.setMessage("already login");
+        dto.setMessage("login please");
         String resMsg = ResponseMessage.LOGIN_FAIL;
 
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, resMsg, dto), HttpStatus.OK);
@@ -65,7 +67,16 @@ public class MyStyleController {
             String userName = (String) session.getAttribute("username");
 
             Users user = usersService.userFindByUserName(userName);
+
+
             List<MyStyleFashionDetailDto> myStyleFashionDetailDtos = myStyleSavedService.fashionMyStyle(user.getId());
+
+            // byte[] 데이터를 Base64로 변환
+            for (MyStyleFashionDetailDto dto : myStyleFashionDetailDtos) {
+                byte[] imageBytes = dto.getImageBytes(); // 데이터베이스에서 가져온 byte[]
+                String base64Image = Base64.getEncoder().encodeToString(imageBytes); // Base64 변환
+                dto.setDiagnosedStyle("data:image/png;base64," + base64Image); // Base64 URL로 설정
+            }
 
             String resMsg = ResponseMessage.TRANSMISSION_SUCCESS;
 
@@ -75,7 +86,7 @@ public class MyStyleController {
 
         StatusDTO dto = new StatusDTO();
 
-        dto.setMessage("already login");
+        dto.setMessage("login please");
         String resMsg = ResponseMessage.LOGIN_FAIL;
 
         return new ResponseEntity(DefaultRes.res(StatusCode.OK, resMsg, dto), HttpStatus.OK);

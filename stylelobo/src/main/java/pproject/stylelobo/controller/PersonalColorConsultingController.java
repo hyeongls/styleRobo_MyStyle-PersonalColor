@@ -37,9 +37,6 @@ public class PersonalColorConsultingController {
     private MyStyleSavedService myStyleSavedService;
 
 
-
-//
-
     @PostMapping("/analysis")
     public ResponseEntity<personalColorResponseDto>  personalColorAnalysis(
             //@RequestBody PersonalReqDto reqDto , HttpSession session) throws IOException {

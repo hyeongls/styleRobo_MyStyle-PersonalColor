@@ -7,11 +7,13 @@ import lombok.Setter;
 import java.util.List;
 
 @Getter
+@Setter
 @NoArgsConstructor
 public class ImageResDTO {
 
     private long created;
     private List<ImageURL> data;
+    private FashionTypeDTO dto;
 
     @Getter
     @Setter

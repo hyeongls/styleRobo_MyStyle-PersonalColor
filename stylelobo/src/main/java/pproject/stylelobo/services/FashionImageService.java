@@ -11,9 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import pproject.stylelobo.config.ImageConfig;
 import pproject.stylelobo.domain.dto.AiFashionDTO;
+import pproject.stylelobo.domain.dto.FashionTypeDTO;
 import pproject.stylelobo.domain.dto.ImageResDTO;
 import pproject.stylelobo.domain.table.FavoriteFashionResults;
-import pproject.stylelobo.domain.table.Personal_Color;
 import pproject.stylelobo.domain.table.Users;
 import pproject.stylelobo.repository.FavoriteFashionResultsRepository;
 
@@ -29,7 +29,7 @@ public class FashionImageService {
     @Value("${apiKey.key}")
     private String apiKey;
 
-    public ImageResDTO FashionType(AiFashionDTO dto){
+    public ImageResDTO FashionType(AiFashionDTO dto, FashionTypeDTO fas){
 
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.parseMediaType(ImageConfig.MEDIA_TYPE));
@@ -46,13 +46,12 @@ public class FashionImageService {
         // 응답에서 URL 추출
         ImageResDTO response = responseEntity.getBody();
 
-        System.out.println("response.getData() = " + response.getData().toString());
-        System.out.println("response.getData() = " + response.getData().get(0));
+        response.setDto(fas);
 
         return response;
     }
 
-    public FavoriteFashionResults saveFashionImage(String selectedStyles, String preferredStyleInput, String diagnosedStyle, Users user,
+    public FavoriteFashionResults saveFashionImage(String selectedStyles, String preferredStyleInput, byte[] diagnosedStyle, Users user,
                                                     String selectedFace, String selectedBody){
 
         FavoriteFashionResults personalColor = new FavoriteFashionResults(selectedStyles, preferredStyleInput, diagnosedStyle, selectedFace, selectedBody, user);
